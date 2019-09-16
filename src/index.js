@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+
+import Dashboard from './lib'
+import { Comp1Widget } from './widget1'
+import { Comp2Widget } from './widget2'
+import { ClockWidget } from './clock'
+
+const App = () => {
+    return (
+        <div>
+            <Dashboard
+                id={'dashboard1'}
+                widgets={[Comp1Widget, Comp2Widget, ClockWidget]}
+                initialWidgetIds={["item1"]}
+                backgroundColor="yellow"
+                widgetBackgroundColor = 'blue'
+                />
+        </div>)
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
