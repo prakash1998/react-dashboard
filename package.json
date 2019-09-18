@@ -19,7 +19,8 @@
     "build": "rm -rf dist && SET NODE_ENV=production& babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -c .storybook"
+    "storybook": "start-storybook -p 6006 -c .storybook",
+    "build-and-publish":"npm run-script build & npm publish"
   },
   "eslintConfig": {
     "extends": "react-app"
