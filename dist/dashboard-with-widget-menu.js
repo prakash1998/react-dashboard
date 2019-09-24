@@ -37,33 +37,28 @@ const DashboardWithWidgetMenu = props => {
   useEffect(() => {
     const savedLayouts = retrieveLayoutState(); // console.log(savedLayouts)
 
-    if (typeof savedLayouts === 'object') setLayouts(savedLayouts);
-
-    if (savedLayouts && Object.keys(savedLayouts).length > 0) {
+    if (savedLayouts && typeof savedLayouts === 'object' && savedLayouts.sm) {
+      setLayouts(savedLayouts);
       const widgetIdsFromStore = savedLayouts.sm.map(item => item.i);
       setVisibleWidgets(widgets.filter(widget => widgetIdsFromStore.includes(widget.id)));
-    } else setVisibleWidgets(widgets.filter(widget => initialWidgetIds.includes(widget.id)));
-  }, [initialWidgetIds, retrieveLayoutState, widgets]);
+    } else setVisibleWidgets(widgets.filter(widget => initialWidgetIds.includes(widget.id))); // only executes after mounting once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  const onEditClick = () => {
+  }, []);
+  const onEditClick = useCallback(() => {
     setEditable(i => !i);
-  };
-
-  const onAddClick = () => {
+  }, []);
+  const onAddClick = useCallback(() => {
     setMenuVisible(true);
-  };
-
-  const saveLayout = () => {
-    // console.log(layouts)
+  }, []);
+  const saveLayout = useCallback(() => {
     saveLayoutState(layouts);
     setEditable(false);
-  };
-
-  const removeWidget = widget => {
+  }, [layouts, saveLayoutState]);
+  const removeWidget = useCallback(widget => {
     setVisibleWidgets(widgets => widgets.filter(w => w.id !== widget.id));
-  };
-
-  const getEditButton = () => {
+  }, []);
+  const getEditButton = useCallback(() => {
     if (EditButton) {
       try {
         return React.createElement(EditButton, {
@@ -77,14 +72,11 @@ const DashboardWithWidgetMenu = props => {
     return React.createElement("button", {
       onClick: onEditClick
     }, " Edit ");
-  };
-
-  const getAddButton = () => {
+  }, [EditButton, onEditClick]);
+  const getAddButton = useCallback(() => {
     if (AddButton) {
       try {
-        return React.createElement(AddButton, {
-          onClick: onAddClick
-        });
+        return React.createElement(AddButton, null); // eslint-disable-next-line no-unreachable
       } catch (e) {
         console.log("%c Error : Something wrong with passed 'EditButton' \n" + e, "color: red");
       }
@@ -93,9 +85,8 @@ const DashboardWithWidgetMenu = props => {
     return React.createElement("button", {
       onClick: onAddClick
     }, " Add ");
-  };
-
-  const getSaveButton = () => {
+  }, [AddButton, onAddClick]);
+  const getSaveButton = useCallback(() => {
     if (SaveButton) {
       try {
         return React.createElement(SaveButton, {
@@ -109,23 +100,8 @@ const DashboardWithWidgetMenu = props => {
     return React.createElement("button", {
       onClick: saveLayout
     }, " Save ");
-  };
-
-  const getWidgetMenuContainer = () => {
-    if (WidgetMenuContainer) {
-      try {
-        return React.createElement(WidgetMenuContainer, {
-          widgetMenu: () => getWidgetMenu()
-        }); // eslint-disable-next-line no-unreachable
-      } catch (e) {
-        console.log("%c Error : Something wrong with passed 'WidgetMenuContainer' \n" + e, "color: red");
-      }
-    }
-
-    return menuVisible ? getWidgetMenu() : React.createElement(React.Fragment, null);
-  };
-
-  const getWidgetMenu = () => {
+  }, [SaveButton, saveLayout]);
+  const getWidgetMenu = useCallback(() => {
     return React.createElement(ResponsiveReactGridLayout, {
       style: { ...widgetMenuStyle,
         display: 'block'
@@ -168,8 +144,20 @@ const DashboardWithWidgetMenu = props => {
         throw Error('you missed "id" for one of the Widget, so it can\'t be rendered');
       }
     }));
-  };
+  }, [visibleWidgets, widgetMenuStyle, widgets]);
+  const getWidgetMenuContainer = useCallback(() => {
+    if (WidgetMenuContainer) {
+      try {
+        return React.createElement(WidgetMenuContainer, {
+          widgetMenu: () => getWidgetMenu()
+        }); // eslint-disable-next-line no-unreachable
+      } catch (e) {
+        console.log("%c Error : Something wrong with passed 'WidgetMenuContainer' \n" + e, "color: red");
+      }
+    }
 
+    return menuVisible ? getWidgetMenu() : React.createElement(React.Fragment, null);
+  }, [WidgetMenuContainer, getWidgetMenu, menuVisible]);
   return React.createElement("div", {
     style: {}
   }, React.createElement("div", {
