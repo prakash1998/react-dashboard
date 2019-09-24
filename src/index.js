@@ -67,7 +67,7 @@ const App = () => {
                 saveLayoutState={(layout) => saveToLocalStorage('dashboard1', layout)}
                 retrieveLayoutState={() => getFromLocalStorage('dashboard1')}
                 EditButton={({ onClick }) => <Button onClick={() => onClick()} type="primary">Edit</Button>}
-                AddButton={({ onClick }) => <Button onClick={() => {onClick();setDrawerVisible(true)}} type="primary">Add</Button>}
+                AddButton={() => <Button onClick={() => setDrawerVisible(true)} type="primary">Add</Button>}
                 SaveButton={({ onClick }) => <Button onClick={() => {onClick();setDrawerVisible(false)}} type="danger">Save</Button>}
                 WidgetMenuContainer={({widgetMenu}) =>
                     <Drawer

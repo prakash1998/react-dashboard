@@ -43,7 +43,7 @@ const DashboardWithWidgetMenu = props => {
       const widgetIdsFromStore = savedLayouts.sm.map(item => item.i);
       setVisibleWidgets(widgets.filter(widget => widgetIdsFromStore.includes(widget.id)));
     } else setVisibleWidgets(widgets.filter(widget => initialWidgetIds.includes(widget.id)));
-  }, []);
+  }, [initialWidgetIds, retrieveLayoutState, widgets]);
 
   const onEditClick = () => {
     setEditable(i => !i);
@@ -54,7 +54,7 @@ const DashboardWithWidgetMenu = props => {
   };
 
   const saveLayout = () => {
-    console.log(layouts);
+    // console.log(layouts)
     saveLayoutState(layouts);
     setEditable(false);
   };
@@ -116,7 +116,7 @@ const DashboardWithWidgetMenu = props => {
       try {
         return React.createElement(WidgetMenuContainer, {
           widgetMenu: () => getWidgetMenu()
-        });
+        }); // eslint-disable-next-line no-unreachable
       } catch (e) {
         console.log("%c Error : Something wrong with passed 'WidgetMenuContainer' \n" + e, "color: red");
       }
