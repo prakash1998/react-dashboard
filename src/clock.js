@@ -112,5 +112,5 @@ class ClockIn extends React.Component {
 
 export const ClockWidget = {
     id: 'clock',
- Component:ClockIn , preferedX:30 , minWidth:20 , minHieght :2
+ Component:ClockIn 
 }

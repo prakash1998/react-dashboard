@@ -17,8 +17,8 @@ export default Widget1
 export const Comp1Widget = {
     id: 'item1',
     Component : Widget1,
-    refreshInterval : 'abc',
+    refreshInterval : 2000,
     backgroundColor : 'yellow',
     preferedY : 30,
-    minWidth : 50,
+
 }

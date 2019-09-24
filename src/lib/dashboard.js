@@ -1,206 +1,158 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState,  useCallback } from 'react'
+import PropTypes from 'prop-types';
 // import GridLayout from 'react-grid-layout';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import './css/styles.css'
-
+import { INFINITE } from './constants'
 import Widget from './widget'
 
-const INFINITE = 9999;
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+const BREAKPOINTRATIOS = {
+    lg: 12,
+    md: 10,
+    sm: 9,
+    xs: 8,
+    xxs: 6,
+}
+const MULTIPLIER = 10
+
+const getLayoutForBreakPoint = (layout, layouts, currentBreakpoint, forBreakpoint) => {
+    // console.log(forBreakpoint,currentBreakpoint,layout)
+    // console.log('hrererere',layout)
+    return layout.map(widget => {
+        if (layouts[forBreakpoint] && layouts[forBreakpoint].filter(w => w.id === widget.id).length > 0)
+            return widget
+        // console.log(widget)
+        const { x, w } = widget
+        const ratio = BREAKPOINTRATIOS[currentBreakpoint] / BREAKPOINTRATIOS[forBreakpoint];
+        // console.log(ratio)
+        // console.log('here')
+        return {
+            ...widget,
+            x: Math.round(x * (1 / ratio)),
+            w: Math.round(w * ratio),
+        }
+    })
+}
+
+const getLayoutsFromLayout = (layout, layouts, breakpoint) => {
+    // console.log(layout)
+    return {
+        lg: getLayoutForBreakPoint(layout, layouts, breakpoint, 'lg'),
+        md: getLayoutForBreakPoint(layout, layouts, breakpoint, 'md'),
+        sm: getLayoutForBreakPoint(layout, layouts, breakpoint, 'sm'),
+        xs: getLayoutForBreakPoint(layout, layouts, breakpoint, 'xs'),
+        xxs: getLayoutForBreakPoint(layout, layouts, breakpoint, 'xxs'),
+    }
+}
 
 const Dashboard = (props) => {
 
     const {
-        // id,
         widgets,
-        initialWidgetIds,
-        retrieveLayoutState,
-        saveLayoutState,
-        style,
-        backgroundColor,
-        widgetBackgroundColorGeneral,
-    } = props
-
-
-
-    const {
-        // height = 500,
-        // width = 1200,
+        layoutsState,
+        setLayoutsState,
+        editable = false,
+        onRemoveWidget,
+        dashboardStyle = {},
+        backgroundColor = 'pink',
+        widgetBackgroundColorGeneral = 'orange',
         fixedHeight = 0,
-        gridCellSize = 100,
-        // draggableCancel = 1,
-        // draggableHandle = 1,
-        leftGravity = false,
         enableGravity = false,
+        leftGravity = false,
         widgetMarginLeftRight = 10,
         widgetMarginTopBottom = 10,
         dashboardLeftPadding = 10,
         dashboardTopPadding = 10,
-        // droppingItem = 1,
-        // isDraggable = 1,
-        // isResizable = 1,
-        // useCSSTransforms = 1,
         preventCollision = false,
-        // isDroppable = 1,
-        // onLayoutChange = 1,
-        // ItemCallback = 1,
-        // onDragStart = 1,
-        // onDrag = 1,
-        // onDragStop = 1,
-        // onResizeStart = 1,
-        // onResize = 1,
-        // onResizeStop = 1,
-        // onDrop = 1,
     } = props;
 
-    const [onScreenWidgetIds, setOnScreenWidgetIds] = useState([])
-    const [layouts, setLayouts] = useState({})
-    const [currentBreakPoint, setCurrentBreakPoint] = useState(undefined)
+    // const [onScreenWidgetIds, setOnScreenWidgetIds] = useState([])
+    // const [layouts, setLayouts] = useState(layoutsState||{})
+    const [currentBreakPoint, setCurrentBreakPoint] = useState('lg')
     const [rowHeight, setRowHeight] = useState(1)
     // const [width, setWidth] = useState(1200)
     // const [currentLayout , setCurrentLayout] = useState([])
-    const [freezeLayout, setFreezeLayout] = useState(true)
-    const tempLayout = useRef([])
+    // const [freezeLayout, setFreezeLayout] = useState(true)
+    // const tempLayout = useRef([])
 
-    const onLayoutChange = (layout, layouts) => {
-        setLayouts(layouts)
-    }
+    const onLayoutChange = useCallback((layout, layouts) => {
+        // console.log(layout,layouts)
+        // console.log(getLayoutsFromLayout(layout,currentBreakPoint))
+        if (layout && currentBreakPoint && layouts)
+            setLayoutsState(getLayoutsFromLayout(layout, layouts, currentBreakPoint))
+    }, [currentBreakPoint , setLayoutsState])
 
-    const saveLayout = () => {
-        onEditClick()
-        saveLayoutState(layouts);
-    }
+    // console.log(currentBreakPoint ,layoutsState)
+    
 
-    const onBreakpointChange = (newBreakPoint, cols) => {
+    const onBreakpointChange = useCallback((newBreakPoint, cols) => {
         setCurrentBreakPoint(newBreakPoint)
-
         let rowHeight = 0;
-        if (cols === 40) {
-            rowHeight = 5
-        } else if (cols === 80) {
-            rowHeight = 3
-        } else {
+        if (newBreakPoint === 'xxs') {
             rowHeight = 1
+        } else if (newBreakPoint === 'xs') {
+            rowHeight = 1
+        } else if (newBreakPoint === 'sm') {
+            rowHeight = 2
+        } else if (newBreakPoint === 'md') {
+            rowHeight = 2
+        } else {
+            rowHeight = 3
         }
         setRowHeight(rowHeight)
+    }, [])
 
-        // console.log(width/cols)
-        // setRowHeight(width / cols)
-    }
+    const removeWidget = useCallback((widget) => {
+        if (typeof onRemoveWidget === 'function')
+            onRemoveWidget(widget)
+    }, [onRemoveWidget])
 
-    const onWidthChange = (newWidth) => {
-        // console.log('here')
-        // console.log(rowHeight)
-        // setWidth(oldWidth => {
-        //     (newWidth > oldWidth) ? setRowHeight( r => r + 1) : setRowHeight( r => r - 1)
-        //     return newWidth
-        // })
-    }
 
-    useEffect(() => {
-        const savedLayouts = retrieveLayoutState();
-        if (typeof savedLayouts === 'object')
-            setLayouts(savedLayouts)
-        if (currentBreakPoint && savedLayouts[currentBreakPoint] && savedLayouts[currentBreakPoint].length > 0)
-            setOnScreenWidgetIds(savedLayouts[currentBreakPoint].map(item => item.i))
-        else
-            setOnScreenWidgetIds(initialWidgetIds)
-    }, [currentBreakPoint])
-
-    // console.log(layouts)
-    // console.log(onScreenWidgetIds)
-    // console.log(currentBreakPoint)
-    const onEditClick = () => {
-        setFreezeLayout(i => !i)
-    }
-
-    const itemDroped = elemParams => {
-        console.log(`Element parameters: ${JSON.stringify(elemParams)}`);
-    };
-
-    // console.log(layouts)
-    return (<div style={{ backgroundColor: "red" }} >
-        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <button onClick={onEditClick} > Edit </button>
-            <button onClick={saveLayout} > Save </button>
-            {/* <div> {
-                widgets && widgets.filter(widget => !onScreenWidgetIds.includes(widget.id))
-                    .map(widget => < ul key={widget.id}
-                        onClick={() => setOnScreenWidgetIds(ids => ids.concat(widget.id))} > {widget.id} </ul>)
-            }
-            </div> */}
-        </div>
+    return (
         <ResponsiveReactGridLayout
-            breakpoints={{ lg: 1200, md: 600, sm: 0 }}
-            cols={{ lg: 12, md: 8, sm: 4 }}
-            layouts={{}}
-            rowHeight={50}
-            compactType='horizontal'
-            // isDraggable={false}
-            isResizable={false}
-        >
-            {
-                widgets && widgets.filter(widget => !onScreenWidgetIds.includes(widget.id))
-                    .map(widget => <div
-                        key={widget.id}
-                        data-grid={{
-                            x: 12,
-                            y: 0,
-                            w:  1,
-                            h:  1,
-                            minW: 0,
-                            maxW: INFINITE,
-                            minH: 0,
-                            maxH: INFINITE,
-                        }}
-                    
-                        style={{
-                            background: 'gray',
-                        }}
-                        onClick={() => setOnScreenWidgetIds(ids => ids.concat(widget.id))} > {widget.id} </div>)
-            }
-        </ResponsiveReactGridLayout>
-
-
-
-        <ResponsiveReactGridLayout
-            style={{ ...style, background: backgroundColor }}
+            style={{ ...dashboardStyle, background: backgroundColor }}
             className="layout"
-            layouts={layouts}
+            layouts={layoutsState}
             preventCollision={preventCollision}
             containerPadding={[dashboardLeftPadding, dashboardTopPadding]}
             margin={[widgetMarginLeftRight, widgetMarginTopBottom]}
-            breakpoints={{ lg: 1200, md: 600, sm: 0 }}
-            cols={{ lg: 120, md: 80, sm: 40 }}
+            // breakpoints={{ lg: 1200, md: 1000, sm: 800 ,xs:500 ,xss:0}}
+            cols={{
+                lg: MULTIPLIER * BREAKPOINTRATIOS.lg,
+                md: MULTIPLIER * BREAKPOINTRATIOS.md,
+                sm: MULTIPLIER * BREAKPOINTRATIOS.sm,
+                xs: MULTIPLIER * BREAKPOINTRATIOS.xs,
+                xxs: MULTIPLIER * BREAKPOINTRATIOS.xxs
+            }}
             rowHeight={rowHeight}
             autoSize={fixedHeight === 0}
-            verticalCompact={enableGravity}
-            compactType={leftGravity ? 'horizontal' : 'vertical'}
+            compactType={enableGravity ? leftGravity ? 'horizontal' : 'vertical' : null}
             onLayoutChange={onLayoutChange}
             onBreakpointChange={onBreakpointChange}
-            onWidthChange={onWidthChange}
-            isDraggable={!freezeLayout}
-            isResizable={!freezeLayout}
-            isDroppable={true}
-            onDrag={itemDroped}
+            // onWidthChange={onWidthChange}
+            isDraggable={editable}
+            isResizable={editable}
+        // isDroppable={true}
+        // onDrag={itemDroped}
+
         >
             {
-                widgets && widgets.filter(widget => onScreenWidgetIds.includes(widget.id))
-                    .map(widget => {
-                        const {
-                            id,
-                            Component,
-                            backgroundColor,
-                            refreshInterval,
-                            preferedX = 0,
-                            preferedY = 0,
-                            minWidth = 10,
-                            maxWidth = INFINITE,
-                            minHeight = 10,
-                            maxHeight = INFINITE,
-                        } = widget
-                        // console.log(widget);
+                widgets && widgets.map(widget => {
+                    const {
+                        id,
+                        Component,
+                        backgroundColor,
+                        refreshInterval,
+                        preferedX = 0,
+                        preferedY = 0,
+                        minWidth = MULTIPLIER,
+                        maxWidth = INFINITE,
+                        minHeight = MULTIPLIER,
+                        maxHeight = INFINITE,
+                    } = widget
+                    if (id && Component) {
                         return (
                             <div key={id}
                                 data-grid={{
@@ -221,24 +173,45 @@ const Dashboard = (props) => {
                                     background: backgroundColor || widgetBackgroundColorGeneral,
                                 }}
                             >
-                                {freezeLayout ? <></> : <span
+                                {editable ? <span
                                     className='close'
                                     droppable='abc'
-                                    onClick={() => setOnScreenWidgetIds(ids => ids.filter(wi => wi !== id))}></span>}
+                                    onClick={() => removeWidget(widget)}></span>
+                                    : <></>}
                                 <Widget Component={Component} refreshInterval={refreshInterval} />
                             </div>)
-                    })
+                    } else {
+                        if (id)
+                            throw Error(`you missed to specify component for widget - ${id}`)
+                        else
+                            throw Error('you missed "id" for one of the Widget, so it can\'t be rendered ')
+                    }
+                })
+
+
             }
-
-            {/* </GridLayout> */}
         </ResponsiveReactGridLayout>
-        <span className="droppable-element" draggable={true} unselectable="on">
-            Droppable Element
-        </span>
-
-    </div>
     )
 
+}
+
+Dashboard.propTypes = {
+    widgets : PropTypes.arrayOf(PropTypes.object).isRequired,
+    layoutsState : PropTypes.object.isRequired,
+    setLayoutsState : PropTypes.func.isRequired,
+    dashboardStyle : PropTypes.object,
+    backgroundColor : PropTypes.string,
+    widgetBackgroundColorGeneral : PropTypes.string,
+    editable : PropTypes.bool,
+    onRemoveWidget : PropTypes.func,
+    fixedHeight : PropTypes.number,
+    leftGravity : PropTypes.bool,
+    enableGravity : PropTypes.bool,
+    widgetMarginLeftRight : PropTypes.number,
+    widgetMarginTopBottom : PropTypes.number,
+    dashboardLeftPadding : PropTypes.number,
+    dashboardTopPadding : PropTypes.number,
+    preventCollision : PropTypes.bool,
 }
 
 export default Dashboard
