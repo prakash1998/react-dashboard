@@ -1,6 +1,5 @@
 # simple-react-dashboard
-A library to create dashboard with widgets.
-created using `create-react-app`.
+A library to create dashboard with widgets.(under development)
 
 ## Installation
 Run the following command:
