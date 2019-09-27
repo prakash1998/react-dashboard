@@ -9,6 +9,7 @@ import { Dashboard, DashboardWithWidgetMenu, DashboardWithEditKey } from './lib'
 import { Comp1Widget } from './widget1'
 import { Comp2Widget } from './widget2'
 import { ClockWidget } from './clock'
+import {antdTableWidget} from './antdTableWidget'
 
 
 const getFromLocalStorage = (key) => {
@@ -58,8 +59,8 @@ const App = () => {
                 // width={1200}
                 // height={500}
                 // fixedHeight={false}
-                gridCellSize={100}
-                widgets={[Comp1Widget, Comp2Widget, ClockWidget]}
+                // gridCellSize={100}
+                widgets={[Comp1Widget, Comp2Widget, ClockWidget , antdTableWidget]}
                 initialWidgetIds={["item1"]}
                 backgroundColor='pink'
                 widgetBackgroundColorGeneral='orange'

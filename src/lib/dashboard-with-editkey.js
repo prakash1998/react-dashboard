@@ -6,19 +6,19 @@ import Dashboard from './dashboard'
 const DashboardWithEditKey = (props) => {
 
     const {
-        EditButton ,
+        EditButton,
         widgets,
-        dashboardStyle = {},
-        backgroundColor = 'pink',
-        widgetBackgroundColorGeneral = 'orange',
-        fixedHeight = 0,
-        enableGravity = false,
-        leftGravity = false,
-        widgetMarginLeftRight = 10,
-        widgetMarginTopBottom = 10,
-        dashboardLeftPadding = 10,
-        dashboardTopPadding = 10,
-        preventCollision = false,
+        dashboardStyle,
+        backgroundColor,
+        widgetBackgroundColorGeneral,
+        fixedHeight,
+        enableGravity,
+        leftGravity,
+        widgetMarginLeftRight,
+        widgetMarginTopBottom,
+        dashboardLeftPadding,
+        dashboardTopPadding,
+        preventCollision,
     } = props;
 
     const [editable, setEditable] = useState(false)
@@ -46,7 +46,7 @@ const DashboardWithEditKey = (props) => {
             <Dashboard
                 widgets={widgets}
                 layoutsState={{}}
-                setLayoutsState={() => { }}
+                setLayoutsState={() => {}}
                 editable={editable}
                 dashboardStyle={dashboardStyle}
                 backgroundColor={backgroundColor}
