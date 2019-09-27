@@ -41,6 +41,8 @@ can be easily set by your user.
 	dashboards, he/she wants using provided widgets.
 5)	[Dashboard](#Dashboard) - It is the base component used by all other dashboards, you can use it, if you
 	want to create your own custom dashboard
+	
+## Unit methodology
 
 ## How to create Widgets
 -	It's as simple as fitting little legos on one giant lego(dashboard)
@@ -48,10 +50,10 @@ can be easily set by your user.
 - 	Let assume You Have Component named 'Clock',
 	you just need to create an object which have following properties :
 ```js
-	const ClockWidget =	{
-					id : 'clock', 
-					Component : Clock, 
-				}
+const ClockWidget = {
+		  id : 'clock', 
+		  Component : Clock, 
+		}
 ```
 	and Hurraa!!! ,you have just created 'Clock' widget , ready to use in dashboard.
 	
@@ -80,7 +82,7 @@ refreshInterval = number (in milli-seconds / 10e-3 seconds )
 
 ```
 
-// following properties are in terms of [custom unit metrix](#unit methodology) used by dashboard (not in pixels)
+- following properties are in terms of [custom unit metrix](#unit methodology) used by dashboard (not in pixels)
 ```js
 
 // as name says, prefered x position from left
@@ -108,8 +110,8 @@ minHeight = number (units*)
 maxHeight = number (units*)
 
 ```
-	* =  in [units](#unit methodology)
-	** = look at [unit methodology](#unit methodology) section for more info
+-	\* :  in [units](#unit methodology)
+-	** : for more info, look at [unit methodology](#unit methodology) section 
 
 
 comming soon.....
