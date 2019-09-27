@@ -14,7 +14,7 @@ application.
 Widgets or Components on Dashboard are fully resizable and their positions
 can be easily set by your user.
 
-## Used Libraries
+### Used Libraries
 [React-Grid-Layout](https://github.com/STRML/react-grid-layout) - for resizable & draggable container
 
 ## Features
@@ -30,7 +30,7 @@ can be easily set by your user.
 * Grid Items placed using CSS Transforms
 
 
-## Available-Dashboard-Types
+### Available Dashboard Types
 1)	[DashboardWithEditKey](#DashboardWithEditKey) - In this type, use can adjust the widgets passed by you 
 	as per his/her choice. you can persist state anywhere you want by passing functions
 2)	[DashboardWithWidgetMenu](#DashboardWithWidgetMenu) - Here, you can provide user set of widgets, from 
@@ -42,7 +42,7 @@ can be easily set by your user.
 5)	[Dashboard](#Dashboard) - It is the base component used by all other dashboards, you can use it, if you
 	want to create your own custom dashboard
 	
-## Unit methodology
+### Unit Methodology
 
 ## How to create Widgets
 -	It's as simple as fitting little legos on one giant lego(dashboard)
@@ -82,7 +82,7 @@ refreshInterval = number (in milli-seconds / 10e-3 seconds )
 
 ```
 
-- following properties are in terms of [custom unit metrix](#unit methodology) used by dashboard (not in pixels)
+- following properties are in terms of [custom unit metrix](#Unit-Methodology) used by dashboard (not in pixels)
 ```js
 
 // as name says, prefered x position from left
@@ -110,8 +110,8 @@ minHeight = number (units*)
 maxHeight = number (units*)
 
 ```
--	\* :  in [units](#unit methodology)
--	** : for more info, look at [unit methodology](#unit methodology) section 
+-	\* :  in [units](#Unit-Methodology)
+-	** : for more info, look at [Unit Methodology](#Unit-Methodology) section 
 
 
 comming soon.....
