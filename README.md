@@ -111,7 +111,7 @@ maxHeight = number (units*)
 
 ```
 -	\* :  in [units](#Unit-Methodology)
--	** : for more info, look at [Unit Methodology](#Unit-Methodology) section 
+-	** : for more info, take a look at [Unit Methodology](#Unit-Methodology) section 
 
 
 comming soon.....
