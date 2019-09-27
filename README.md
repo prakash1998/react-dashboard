@@ -78,33 +78,38 @@ backgroundColor : string
 //	You need to use [refreshHook](#refreshHook) inside your component for using this feature
 refreshInterval = number (in milli-seconds / 10e-3 seconds )
 
+```
+
 // following properties are in terms of [custom unit metrix](#unit methodology) used by dashboard (not in pixels)
+```js
 
 // as name says, prefered x position from left
 // default = 0 
-preferedX = number ([units](#unit methodology))
+preferedX = number (units*)
 
 // prefered y position from top
 // default = 0 
-preferedY = number ([units](#unit methodology))
+preferedY = number (units*)
 
 // minimum width of the widget
-// default = MULTIPLIER (look at [unit methodology](#unit methodology) section for more info)
-minWidth = number ([units](#unit methodology))
+// default = MULTIPLIER (**)
+minWidth = number (units*)
 
 // maximum width of the widget
-// default = INFINITE (look at [unit methodology](#unit methodology) section for more info)
-maxWidth = number ([units](#unit methodology))
+// default = INFINITE (**)
+maxWidth = number (units*)
 
 // minimum height of the widget
-// default = MULTIPLIER (look at [unit methodology](#unit methodology) section for more info)
-minHeight = number ([units](#unit methodology))
+// default = MULTIPLIER (**)
+minHeight = number (units*)
 
 // maximum height of the widget
-// default = INFINITE (look at [unit methodology](#unit methodology) section for more info)
-maxHeight = number ([units](#unit methodology))
+// default = INFINITE (**)
+maxHeight = number (units*)
 
 ```
+	* =  in [units](#unit methodology)
+	** = look at [unit methodology](#unit methodology) section for more info
 
 
 comming soon.....
