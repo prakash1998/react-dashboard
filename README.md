@@ -89,6 +89,10 @@ refreshInterval = number (in milli-seconds / 10e-3 seconds )
 // default = 0 
 preferedX = number (units*)
 
+<big><pre>
+**void** Click ([**A**](#Unit-Methodology) key) **const**
+</pre></big>
+
 // prefered y position from top
 // default = 0 
 preferedY = number (units*)
