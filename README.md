@@ -43,6 +43,17 @@ can be easily set by your user.
 	want to create your own custom dashboard
 	
 ### Unit Methodology
+- For shake of simplicity and responsiveness, i have used custom unit instead of pixel
+- In code, there is constant named MULTIPLIER, which is used to derive partition of dashboard.
+	ex. MULTIPLIER = 10 means, dashboard board have 100 columns in large view, and it will decrease 
+		to 90,80,70,60 as screen size decreases.
+- you can check value of MULTIPLIER in code, for now it is fixed.
+- you need to give all properties to widgets using this unit method.
+	ex. if you want to set minimum width of widget to feel 50% dashboard then you need to pass 50 as minWidth.
+- It is like passing percentage value with respect to dashboard. dashboard will manage its propertiy changes 
+	as per screens size changes.
+- Height of the compnent is also relative to the width, so you need to use same units for that.
+	
 
 ## How to create Widgets
 -	It's as simple as fitting little legos on one giant lego(dashboard)
@@ -114,12 +125,69 @@ maxHeight = number (units*)
 -	** : for more info, take a look at [Unit Methodology](#Unit-Methodology) section 
 
 
-comming soon.....
 work in progress ...........
 
 ## Dashboard 
 
+It is the base component for all other complex components. So yup , you can create custom dashboard using this component.
+It provides you basic container for widgets, you can play with it and create awesome custom dashboard as you like
 
+-Dashboard has following properties to configure
 ```js
+// array of widgets( take a look at create widget section )
+widgets // Required
 
+// 
+layoutsState,
+
+
+setLayoutsState,
+
+// It specify , if dashboard is editable or not
+// default = false
+editable  
+
+// If you pass this function, it'll get called on close event of widget
+// it will provide you host widget as parameter
+onRemoveWidget  // ( widget ) => { }
+
+// css for dashboard
+dashboardStyle = {}
+
+// background color for css
+// default = 'pink'
+backgroundColor 
+
+// background color for widget container
+// default = ''
+widgetBackgroundColorGeneral
+
+// you can specify fixed Height for dashboard
+// default = 0 means adaptive height
+// under development
+fixedHeight 
+
+// This flag is for gravity of dashboard 
+// default = false , means no gravity - widgets will float on dashboard
+// gravity defines widgets flow direction  
+enableGravity = false,
+
+// you can specify flow direction here
+// default = false , means widgets will flow in top direction
+// if true widget will flow in left to right direction
+leftGravity = false
+
+// following are margins and paddings ( in pixels ) for dashboard and widgets
+// default = 10px (for all)
+widgetMarginLeftRight
+widgetMarginTopBottom
+dashboardLeftPadding
+dashboardTopPadding
+
+// this property refers to behaviour of widgets when user drags widget and it passes through 
+// another widget, true means other widgets will not move for create space for holded widget
+// default = false
+preventCollision,
 ```
+
+
