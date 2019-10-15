@@ -187,7 +187,7 @@ dashboardTopPadding
 // this property refers to behaviour of widgets when user drags widget and it passes through 
 // another widget, true means other widgets will not move for create space for holded widget
 // default = false
-preventCollision,
+preventCollision
 ```
 
 
