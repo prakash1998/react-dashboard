@@ -137,11 +137,15 @@ It provides you basic container for widgets, you can play with it and create awe
 // array of widgets( take a look at create widget section )
 widgets // Required
 
-// 
-layoutsState,
+// layout for widget on dashboard
+// this is state of the dashboard all the lifetime of the dashboard
+// you can set it externally from anywhere
+layoutsState // Required
 
-
-setLayoutsState,
+// pair of layoutsState and setLayoutsState should be passed for 
+// responsive functionality
+// function to set layoutState
+setLayoutsState // Required
 
 // It specify , if dashboard is editable or not
 // default = false

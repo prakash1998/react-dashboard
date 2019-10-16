@@ -1,12 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 
 import Dashboard from './dashboard'
 
+const getFromLocalStorage = (key) => {
+    let ls = {};
+    if (global.localStorage) {
+        try {
+            ls = JSON.parse(global.localStorage.getItem(key)) || {};
+        } catch (e) {
+            /*Ignore*/
+        }
+    }
+    return ls;
+}
+
+const saveToLocalStorage = (key, value) => {
+    if (global.localStorage) {
+        global.localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+    }
+}
+
 const DashboardWithEditKey = (props) => {
 
     const {
+        id,
         EditButton,
+        retrieveLayoutState,
+        saveLayoutState,
         widgets,
         dashboardStyle,
         backgroundColor,
@@ -21,9 +45,21 @@ const DashboardWithEditKey = (props) => {
         preventCollision,
     } = props;
 
+    const [layouts, setLayouts] = useState({})
+
+    useEffect(() => {
+        const savedLayouts = retrieveLayoutState && saveToLocalStorage ? retrieveLayoutState(id) : getFromLocalStorage(id);
+        if (savedLayouts && typeof savedLayouts === 'object' && savedLayouts.sm)
+            setLayouts(savedLayouts)
+        // only executes after mounting once
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const [editable, setEditable] = useState(false)
 
     const onEditClick = () => {
+        if (editable)
+            retrieveLayoutState && saveLayoutState ? saveLayoutState(id, layouts) : saveToLocalStorage(id, layouts)
         setEditable(i => !i)
     }
 
@@ -45,8 +81,8 @@ const DashboardWithEditKey = (props) => {
             </span>
             <Dashboard
                 widgets={widgets}
-                layoutsState={{}}
-                setLayoutsState={() => {}}
+                layoutsState={layouts}
+                setLayoutsState={setLayouts}
                 editable={editable}
                 dashboardStyle={dashboardStyle}
                 backgroundColor={backgroundColor}
@@ -65,7 +101,10 @@ const DashboardWithEditKey = (props) => {
 }
 
 DashboardWithEditKey.propTypes = {
-    EditButton : PropTypes.func,
+    id: PropTypes.string.isRequired,
+    EditButton: PropTypes.func,
+    retrieveLayoutState: PropTypes.func,
+    saveLayoutState: PropTypes.func,
     widgets: PropTypes.arrayOf(PropTypes.object).isRequired,
     dashboardStyle: PropTypes.object,
     backgroundColor: PropTypes.string,

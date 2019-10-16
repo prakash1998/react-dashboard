@@ -9,7 +9,7 @@ import { Dashboard, DashboardWithWidgetMenu, DashboardWithEditKey } from './lib'
 import { Comp1Widget } from './widget1'
 import { Comp2Widget } from './widget2'
 import { ClockWidget } from './clock'
-import {antdTableWidget} from './antdTableWidget'
+import { antdTableWidget } from './antdTableWidget'
 
 
 const getFromLocalStorage = (key) => {
@@ -40,7 +40,8 @@ const App = () => {
 
     return (
         <div>
-            {/* <DashboardWithEditKey
+            <DashboardWithEditKey
+                id='dashboard'
                 // width={1200}
                 // height={500}
                 // fixedHeight={false}
@@ -53,9 +54,9 @@ const App = () => {
                 // saveLayoutState={(layout) => saveToLocalStorage('dashboard1', layout)}
                 // retrieveLayoutState={() => getFromLocalStorage('dashboard1')}
                 EditButton={({ onClick }) => <Button onClick={() => { onClick(); setDrawerVisible(true) }} type="primary">Edit</Button>}
-            /> */}
+            />
 
-            <DashboardWithWidgetMenu
+            {/* <DashboardWithWidgetMenu
                 // width={1200}
                 // height={500}
                 // fixedHeight={false}
@@ -81,7 +82,7 @@ const App = () => {
                     >
                         {widgetMenu()}
                     </Drawer>}
-            />
+            /> */}
             {/* <Dashboard
                 // width={1200}
                 // height={500}
