@@ -124,8 +124,134 @@ maxHeight = number (units*)
 -	\* :  in [units](#Unit-Methodology)
 -	** : for more info, take a look at [Unit Methodology](#Unit-Methodology) section 
 
+- You can see Code Samples for widget on following links:
+- [Clock.js](https://github.com/prakash1998/react-dashboard/blob/master/src/clock.js)
+- [demo.js](https://github.com/prakash1998/react-dashboard/blob/master/src/widget1.js)
+- [antdTableWidget.js](https://github.com/prakash1998/react-dashboard/blob/master/src/antdTableWidget.js)
 
-work in progress ...........
+### Common properties for all dashboards 
+- this are the properties either essential for creating dashboard or related to styling of the dashboard
+- you can pass this properties as props to any of the dashboard available
+
+```js
+// array of widgets( take a look at create widget section )
+widgets = array of object // Required
+
+// css for dashboard
+// default = {}
+dashboardStyle = object
+
+// background color for css
+// default = 'pink'
+backgroundColor = string 
+
+// background color for widget container
+// default = ''
+widgetBackgroundColorGeneral = string
+
+// you can specify fixed Height for dashboard
+// default = 0 means adaptive height
+// under development
+fixedHeight = number
+
+// This flag is for gravity of dashboard 
+// default = false , means no gravity - widgets will float on dashboard
+// gravity defines widgets flow direction  
+// default = false
+enableGravity = number,
+
+// you can specify flow direction here
+// default = false , means widgets will flow in top direction
+// if true widget will flow in left to right direction
+// default = false
+leftGravity = boolean
+
+// following are margins and paddings ( in pixels ) for dashboard and widgets
+// default = 10px (for all)
+widgetMarginLeftRight = number
+widgetMarginTopBottom = number
+dashboardLeftPadding = number
+dashboardTopPadding = number
+
+// this property refers to behaviour of widgets when user drags widget and it passes through 
+// another widget, true means other widgets will not move for create space for holded widget
+// default = false
+preventCollision = boolean
+
+```
+
+## DashboardWithEditKey
+- In this type, you will get dashboard with edit button
+- User can edit dashboard state, it will be stored/retrieved from storage specified by passed function
+
+-DashboardWithEditKey has following properties to configure other than [common](#Common-properties-for-all-dashboards) properties
+```js
+// Unique identifier for dashboard
+// it will be used for store dashboard state into localStorage, if storage functions are not passed
+id  = string 
+
+// It is function which should return jsx to render button
+// Using this you can inject your own button component withing this component to match your application theme
+// default = it will render simple html button in case of undefined / error	
+EditButton = function // () => { return (jsx for button)}
+
+// You can pass function which will be called when dashboard need to save state
+// default = it will try to store state in localStorage	
+saveLayoutState = function // ( id , state ) => { }
+
+// You can pass function which will be used to retrieve state of layout
+// default = it will try to fetch state from localStorage
+retrieveLayoutState = function // ( id ) => { return state }
+
+```
+- You can see Code Samples for widget on following links:
+- [DashboardWithEditKey] (https://github.com/prakash1998/react-dashboard/blob/master/src/index.js)
+
+##DashboardWithWidgetMenu
+- And now , In this Component you will get Widget menu along with dashboard.
+- User can add or remove widgets to or from dashboard
+- Removed widget will automatically added to Widget menu and shown when user clicks on add
+- This component also provide custom save / retrieve function as [DashboardWithEditKey](#DashboardWithEditKey) component
+
+```js
+
+// It is function which should return jsx to render button
+// Using this you can inject your own button component withing this component to match your application theme
+// default = it will render simple html button in case of undefined or any error	
+EditButton = function // () => { return (jsx for button)}
+
+// It is function which should return jsx to render button
+// Using this you can inject your own button component withing this component to match your application theme
+// default = it will render simple html button in case of undefined or any error
+AddButton: PropTypes.func
+
+// It is function which should return jsx to render button
+// Using this you can inject your own button component withing this component to match your application theme
+// default = it will render simple html button in case of undefined or any error
+SaveButton: PropTypes.func
+
+// It is function which should return jsx to render button
+// Using this you can inject your own container withing this component to show widgets e.g. drawer / modal
+// default = it will render simple html div in case of undefined or any error
+WidgetMenuContainer: PropTypes.func
+
+// style for widget menu if not passed WidgetMenuContainer
+widgetMenuStyle = object
+
+// Which widgets should be rendered initially
+initialWidgetIds: array of widget ids // Required
+	
+// You can pass function which will be called when dashboard need to save state
+// default = it will try to store state in localStorage	
+saveLayoutState = function // ( id , state ) => { }
+
+// You can pass function which will be used to retrieve state of layout
+// default = it will try to fetch state from localStorage
+retrieveLayoutState = function // ( id ) => { return state }
+
+```
+- You can see Code Samples for widget on following links:
+- [DashboardWithEditKey] (https://github.com/prakash1998/react-dashboard/blob/master/src/index.js)
 
 ## Dashboard 
 
@@ -134,64 +260,27 @@ It provides you basic container for widgets, you can play with it and create awe
 
 -Dashboard has following properties to configure
 ```js
-// array of widgets( take a look at create widget section )
-widgets // Required
-
 // layout for widget on dashboard
 // this is state of the dashboard all the lifetime of the dashboard
 // you can set it externally from anywhere
-layoutsState // Required
+layoutsState = object // Required
 
 // pair of layoutsState and setLayoutsState should be passed for 
 // responsive functionality
 // function to set layoutState
-setLayoutsState // Required
+setLayoutsState = function // Required   // ( state ) => { }
 
 // It specify , if dashboard is editable or not
 // default = false
-editable  
+editable  = boolean
 
 // If you pass this function, it'll get called on close event of widget
 // it will provide you host widget as parameter
-onRemoveWidget  // ( widget ) => { }
+onRemoveWidget = function // ( widget ) => { }
 
-// css for dashboard
-dashboardStyle = {}
-
-// background color for css
-// default = 'pink'
-backgroundColor 
-
-// background color for widget container
-// default = ''
-widgetBackgroundColorGeneral
-
-// you can specify fixed Height for dashboard
-// default = 0 means adaptive height
-// under development
-fixedHeight 
-
-// This flag is for gravity of dashboard 
-// default = false , means no gravity - widgets will float on dashboard
-// gravity defines widgets flow direction  
-enableGravity = false,
-
-// you can specify flow direction here
-// default = false , means widgets will flow in top direction
-// if true widget will flow in left to right direction
-leftGravity = false
-
-// following are margins and paddings ( in pixels ) for dashboard and widgets
-// default = 10px (for all)
-widgetMarginLeftRight
-widgetMarginTopBottom
-dashboardLeftPadding
-dashboardTopPadding
-
-// this property refers to behaviour of widgets when user drags widget and it passes through 
-// another widget, true means other widgets will not move for create space for holded widget
-// default = false
-preventCollision
 ```
+- You can see Source code of DashboardWithEditKey and DashboardWithWidgetMenu for usage of Dashboard:
+- [dashboard-with-editkey.js] (https://github.com/prakash1998/react-dashboard/blob/master/src/lib/dashboard-with-editkey.js)
+- [dashboard-with-widget-menu.js] (https://github.com/prakash1998/react-dashboard/blob/master/src/lib/dashboard-with-widget-menu.js)
 
 

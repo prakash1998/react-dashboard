@@ -1,34 +1,42 @@
+/*************************************************************/
+/*              scrollbar css for widgets                    */
+/*************************************************************/
+
+/* for Chrome browser  */
+div.rdl-widget-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #F5F5F5;
+}
+div.rdl-widget-container::-webkit-scrollbar-thumb {
+  background-color: #888888;
+}
+/* for FireFox browser */
+.rdl-widget-container  * {
+  scrollbar-width: thin !important;
+  scrollbar-color: #888888 #F5F5F5 !important;
+}
+/* for Edge browser */
+
 
 /*************************************************************/
 /*                       close button                        */
 /*************************************************************/
 
-.close {
+.rdl-close {
   position: absolute;
   right: 5px;
   top: 5px;
   width: 15px;
   height: 15px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgMjAuMTg4bC04LjMxNS04LjIwOSA4LjItOC4yODItMy42OTctMy42OTctOC4yMTIgOC4zMTgtOC4zMS04LjIwMy0zLjY2NiAzLjY2NiA4LjMyMSA4LjI0LTguMjA2IDguMzEzIDMuNjY2IDMuNjY2IDguMjM3LTguMzE4IDguMjg1IDguMjAzeiIvPjwvc3ZnPg==") !important;
+  background-size: cover;
   opacity: 0.5;
+  z-index: 999;
 }
-.close:hover {
+.rdl-close:hover {
   opacity: 1;
 }
-.close:before, .close:after {
-  position: absolute;
-  left: 5px;
-  content: ' ';
-  height: 15px;
-  width: 3px;
-  background-color: #333;
-}
-.close:before {
-  transform: rotate(45deg);
-}
-.close:after {
-  transform: rotate(-45deg);
-}
-
 
 
 /*************************************************************/

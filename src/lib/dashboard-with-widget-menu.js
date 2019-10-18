@@ -46,29 +46,33 @@ const DashboardWithWidgetMenu = (props) => {
             const widgetIdsFromStore = savedLayouts.sm.map(item => item.i);
             setVisibleWidgets(widgets.filter(widget => widgetIdsFromStore.includes(widget.id)))
         }
-        else
-            setVisibleWidgets(widgets.filter(widget => initialWidgetIds.includes(widget.id)))
-    // only executes after mounting once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        else {
+            if (initialWidgetIds.length === 0)
+                setVisibleWidgets(widgets)
+            else
+                setVisibleWidgets(widgets.filter(widget => initialWidgetIds.includes(widget.id)))
+        }
+        // only executes after mounting once
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
     const onEditClick = useCallback(() => {
         setEditable(i => !i)
-    },[])
+    }, [])
 
     const onAddClick = useCallback(() => {
         setMenuVisible(true)
-    },[])
+    }, [])
 
     const saveLayout = useCallback(() => {
         saveLayoutState(layouts);
         setEditable(false)
-    },[layouts, saveLayoutState])
+    }, [layouts, saveLayoutState])
 
     const removeWidget = useCallback((widget) => {
         setVisibleWidgets(widgets => widgets.filter(w => w.id !== widget.id))
-    },[])
+    }, [])
 
     const getEditButton = useCallback(() => {
         if (EditButton) {
@@ -79,19 +83,19 @@ const DashboardWithWidgetMenu = (props) => {
             }
         }
         return <button onClick={onEditClick} > Edit </button>
-    },[EditButton, onEditClick])
+    }, [EditButton, onEditClick])
 
     const getAddButton = useCallback(() => {
         if (AddButton) {
             try {
                 return <AddButton />
-            // eslint-disable-next-line no-unreachable
+                // eslint-disable-next-line no-unreachable
             } catch (e) {
                 console.log("%c Error : Something wrong with passed 'EditButton' \n" + e, "color: red")
             }
         }
         return <button onClick={onAddClick} > Add </button>
-    },[AddButton, onAddClick])
+    }, [AddButton, onAddClick])
 
     const getSaveButton = useCallback(() => {
         if (SaveButton) {
@@ -102,7 +106,7 @@ const DashboardWithWidgetMenu = (props) => {
             }
         }
         return <button onClick={saveLayout} > Save </button>
-    },[SaveButton, saveLayout])
+    }, [SaveButton, saveLayout])
 
     const getWidgetMenu = useCallback(() => {
 
@@ -146,7 +150,7 @@ const DashboardWithWidgetMenu = (props) => {
                     })
             }
         </ResponsiveReactGridLayout>
-    },[visibleWidgets, widgetMenuStyle, widgets])
+    }, [visibleWidgets, widgetMenuStyle, widgets])
 
     const getWidgetMenuContainer = useCallback(() => {
         if (WidgetMenuContainer) {
@@ -158,7 +162,7 @@ const DashboardWithWidgetMenu = (props) => {
             }
         }
         return menuVisible ? getWidgetMenu() : <></>
-    },[WidgetMenuContainer, getWidgetMenu, menuVisible])
+    }, [WidgetMenuContainer, getWidgetMenu, menuVisible])
 
 
     return (
@@ -200,7 +204,7 @@ DashboardWithWidgetMenu.prototype = {
     SaveButton: PropTypes.func,
     WidgetMenuContainer: PropTypes.func,
     widgetMenuStyle: PropTypes.object,
-    initialWidgetIds: PropTypes.arrayOf(PropTypes.string),
+    initialWidgetIds: PropTypes.arrayOf(PropTypes.string).isRequired,
     retrieveLayoutState: PropTypes.func.isRequired,
     saveLayoutState: PropTypes.func.isRequired,
     widgets: PropTypes.arrayOf(PropTypes.object).isRequired,

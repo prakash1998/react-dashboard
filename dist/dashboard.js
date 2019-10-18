@@ -7,10 +7,10 @@ import { INFINITE } from './constants';
 import Widget from './widget';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const BREAKPOINTRATIOS = {
-  lg: 12,
-  md: 10,
-  sm: 9,
-  xs: 8,
+  lg: 10,
+  md: 9,
+  sm: 8,
+  xs: 7,
   xxs: 6
 };
 const MULTIPLIER = 10;
@@ -55,7 +55,7 @@ const Dashboard = props => {
     onRemoveWidget,
     dashboardStyle = {},
     backgroundColor = 'pink',
-    widgetBackgroundColorGeneral = 'orange',
+    widgetBackgroundColorGeneral = '',
     fixedHeight = 0,
     enableGravity = false,
     leftGravity = false,
@@ -157,19 +157,20 @@ const Dashboard = props => {
           isDragabble: true,
           isResizable: true
         },
+        className: "rdl-widget-container",
         style: {
-          background: backgroundColor || widgetBackgroundColorGeneral
+          background: backgroundColor || widgetBackgroundColorGeneral,
+          overflow: 'hidden'
         }
       }, editable ? React.createElement("span", {
-        className: "close",
-        droppable: "abc",
+        className: "rdl-close",
         onClick: () => removeWidget(widget)
       }) : React.createElement(React.Fragment, null), React.createElement(Widget, {
         Component: Component,
         refreshInterval: refreshInterval
       }));
     } else {
-      if (id) throw Error(`you missed to specify component for widget - ${id}`);else throw Error('you missed "id" for one of the Widget, so it can\'t be rendered ');
+      if (id) throw Error(`you missed to specify Component for widget - ${id}`);else throw Error('you missed "id" for one of the Widget, so it can\'t be rendered ');
     }
   }));
 };
