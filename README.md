@@ -1,4 +1,4 @@
-# simple react dashboard
+### Simple React Dashboard
 A library to create dashboard with widgets.(under development)
 
 ## Installation
@@ -207,7 +207,7 @@ retrieveLayoutState = function // ( id ) => { return state }
 - You can see Code Samples for widget on following links:
 - [DashboardWithEditKey] (https://github.com/prakash1998/react-dashboard/blob/master/src/index.js)
 
-##DashboardWithWidgetMenu
+## DashboardWithWidgetMenu
 - And now , In this Component you will get Widget menu along with dashboard.
 - User can add or remove widgets to or from dashboard
 - Removed widget will automatically added to Widget menu and shown when user clicks on add
@@ -283,4 +283,7 @@ onRemoveWidget = function // ( widget ) => { }
 - [dashboard-with-editkey.js] (https://github.com/prakash1998/react-dashboard/blob/master/src/lib/dashboard-with-editkey.js)
 - [dashboard-with-widget-menu.js] (https://github.com/prakash1998/react-dashboard/blob/master/src/lib/dashboard-with-widget-menu.js)
 
+
+[Thank you!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!](#Simple-React-Dashboard)
+[Back To Top](#Simple-React-Dashboard)
 
