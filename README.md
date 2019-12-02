@@ -66,7 +66,7 @@ const ClockWidget = {
 		  Component : Clock, 
 		}
 ```
-	and Hurraa!!! ,you have just created 'Clock' widget , ready to use in dashboard.
+Hurraa!!! ,you have just created 'Clock' widget , ready to use in dashboard.
 	
 ## Available properties for Widget
 - Currently, Widget supports the following properties (suggest more properties by raising issue or by pull request):
@@ -87,11 +87,17 @@ Component : object // Required
 // default = no-color/transparant
 backgroundColor : string
 
-//  It is interval by which widget will get refreshed by dashboard.
-//	You need to use [refreshHook](#refreshHook) inside your component for using this feature
+// It is interval by which widget will get refreshed by dashboard.
+// You need to use (refreshHook)* inside your component 
+// for using this feature
 refreshInterval = number (in milli-seconds / 10e-3 seconds )
 
 ```
+-	\* :  refresh hook is kind of hook which will be altered every time based on passed time interval.
+For Class Component 
+You can use it inside useEffect hook as dependency to refresh for functional component.
+example of refresh hook is provided in below link [refreshHook]()
+
 
 - following properties are in terms of [custom unit metrix](#Unit-Methodology) used by dashboard (not in pixels)
 ```js
@@ -173,8 +179,10 @@ widgetMarginTopBottom = number
 dashboardLeftPadding = number
 dashboardTopPadding = number
 
-// this property refers to behaviour of widgets when user drags widget and it passes through 
-// another widget, true means other widgets will not move for create space for holded widget
+// this property refers to behaviour of widgets 
+// when user drags widget and it passes through 
+// another widget, true means other widgets will not move 
+// for create space for holded widget
 // default = false
 preventCollision = boolean
 
@@ -187,15 +195,18 @@ preventCollision = boolean
 -DashboardWithEditKey has following properties to configure other than [common](#Common-properties-for-all-dashboards) properties
 ```js
 // Unique identifier for dashboard
-// it will be used for store dashboard state into localStorage, if storage functions are not passed
+// it will be used for store dashboard state into 
+// localStorage, if storage functions are not passed
 id  = string 
 
 // It is function which should return jsx to render button
-// Using this you can inject your own button component withing this component to match your application theme
+// Using this you can inject your own button component 
+// withing this component to match your application theme
 // default = it will render simple html button in case of undefined / error	
 EditButton = function // () => { return (jsx for button)}
 
-// You can pass function which will be called when dashboard need to save state
+// You can pass function which will be called 
+// when dashboard need to save state
 // default = it will try to store state in localStorage	
 saveLayoutState = function // ( id , state ) => { }
 
@@ -216,22 +227,26 @@ retrieveLayoutState = function // ( id ) => { return state }
 ```js
 
 // It is function which should return jsx to render button
-// Using this you can inject your own button component withing this component to match your application theme
+// Using this you can inject your own button component within 
+// this component to match your application theme
 // default = it will render simple html button in case of undefined or any error	
 EditButton = function // () => { return (jsx for button)}
 
 // It is function which should return jsx to render button
-// Using this you can inject your own button component withing this component to match your application theme
+// Using this you can inject your own button component within 
+// this component to match your application theme
 // default = it will render simple html button in case of undefined or any error
 AddButton: PropTypes.func
 
 // It is function which should return jsx to render button
-// Using this you can inject your own button component withing this component to match your application theme
+// Using this you can inject your own button component within
+// this component to match your application theme
 // default = it will render simple html button in case of undefined or any error
 SaveButton: PropTypes.func
 
 // It is function which should return jsx to render button
-// Using this you can inject your own container withing this component to show widgets e.g. drawer / modal
+// Using this you can inject your own container within 
+// this component to show widgets e.g. drawer / modal
 // default = it will render simple html div in case of undefined or any error
 WidgetMenuContainer: PropTypes.func
 
@@ -241,7 +256,8 @@ widgetMenuStyle = object
 // Which widgets should be rendered initially
 initialWidgetIds: array of widget ids // Required
 	
-// You can pass function which will be called when dashboard need to save state
+// You can pass function which will be called 
+// when dashboard need to save state
 // default = it will try to store state in localStorage	
 saveLayoutState = function // ( id , state ) => { }
 
