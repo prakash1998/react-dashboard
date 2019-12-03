@@ -1,7 +1,7 @@
 {
   "name": "react-dashboard-lib",
   "version": "0.0.0-development",
-  "description": "library to create responsive dashboards",
+  "description": "Dashboard with flexible layout of widgets",
   "author": "prakash1998",
   "license": "MIT",
   "repository": {

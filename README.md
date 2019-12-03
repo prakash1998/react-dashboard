@@ -1,5 +1,5 @@
 ### Simple React Dashboard
-A library to create dashboard with widgets.(under development)
+A library to create dashboard with widgets
 
 ## Installation
 Install the [react-dashboard-lib](https://www.npmjs.com/package/react-dashboard-lib) using [npm](https://www.npmjs.com/):
