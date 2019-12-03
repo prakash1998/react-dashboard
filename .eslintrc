@@ -1,0 +1,42 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["prettier", "jest", "react-hooks", "emotion"],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "standard",
+    "standard-react",
+    "prettier",
+    "plugin:jest/recommended",
+    "eslint-config-prettier",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "no-console": "off",
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/jsx-indent": "off",
+    "react/jsx-handler-names": "off",
+    "react/jsx-curly-newline": "off",
+    "react/jsx-fragments": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "emotion/jsx-import": "error",
+    "import/no-named-as-default": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "React|jsx|css|^_",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "none"
+      }
+    ]
+  },
+  "env": {
+    "browser": true
+  }
+}

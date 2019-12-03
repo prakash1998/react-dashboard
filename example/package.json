@@ -1,0 +1,21 @@
+{
+  "name": "react-dashboard-lib-example",
+  "homepage": "https://prakash1998.github.io/react-dashboard-lib",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.26.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dashboard-lib": "link:..",
+    "react-dom": "^16.4.1",
+    "react-scripts": "^1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
